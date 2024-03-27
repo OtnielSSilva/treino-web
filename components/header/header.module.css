@@ -1,0 +1,50 @@
+.header {
+  background-color: #333;
+  color: white;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.freeLink {
+  text-decoration: none;
+}
+
+.logo {
+  font-size: 24px;
+  cursor: pointer;
+  text-transform: uppercase;
+  color: white;
+}
+
+.logo:hover {
+  color: #f1f1f1;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-evenly;
+  width: 20%;
+}
+
+.input {
+  padding: 10px;
+  margin-right: 15px;
+  border: none;
+  border-radius: 5px;
+  width: 400px;
+}
+
+.button {
+  background-color: #555;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #777;
+}
