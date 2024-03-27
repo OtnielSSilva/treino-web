@@ -14,18 +14,20 @@ const StyledProduct = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: space-between;
+	text-align: center;
 `;
 
 const StyledImage = styled.img`
-	height: 200px;
-	width: 200px;
+	height: 150px;
+	width: 150px;
 `;
 
 export const Product = ({ product }: ProductProps) => {
 	const { title, image, price } = product;
 	return (
 		<StyledProduct>
-			<h3>{title}</h3>
+			{title.length <= 40 ? <h3>{title}</h3> : <h3>{title.slice(0, 40)}</h3>}
 			<StyledImage src={image} alt={title} />
 			<p>Preço: R${price}</p>
 		</StyledProduct>

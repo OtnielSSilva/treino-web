@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { Product } from "./product";
 import { IProduct } from "../types/types";
 import styled from "styled-components";
-import { fetchProducts } from "../app/data";
+import { fetchProducts } from "../services/data";
 
 const StyledProducts = styled.div`
-	width: 80%;
+	width: 77%;
 	margin: 0 auto;
 `;
 
