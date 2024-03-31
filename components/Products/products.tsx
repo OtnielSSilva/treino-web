@@ -1,18 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Product } from './Product/product';
-import { IProduct } from '../types/types';
-import styled from 'styled-components';
-import { fetchProducts } from '../services/data';
-
-const StyledList = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-`;
+import { Product } from '../Product/product';
+import { IProduct } from '../../types/types';
+import { fetchProducts } from '../../services/data';
+import styles from './products.module.css';
 
 export const Products = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -21,13 +12,14 @@ export const Products = () => {
     fetchProducts().then((data) => setProducts(data));
   }, []);
 
+  // li da lista faltando
   return (
     <div>
-      <StyledList>
+      <ul className={styles.listproducts}>
         {products.map((product) => (
           <Product key={product.id} product={product} />
         ))}
-      </StyledList>
+      </ul>
     </div>
   );
 };

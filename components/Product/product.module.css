@@ -57,8 +57,6 @@
   color: #333;
   font-weight: bold;
   margin: 10px 0 20px; /* Mais espaço antes e depois do preço */
-  display: flex;
-  flex-direction: column;
 }
 
 .originalPrice {

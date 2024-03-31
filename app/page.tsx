@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import Hero from '@/components/Hero/hero';
-import { Products } from '@/components/products';
 import styles from './page.module.css';
+import { Products } from '@/components/Products/products';
 
 const heroSlides = [
   {
