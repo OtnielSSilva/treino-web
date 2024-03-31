@@ -1,6 +1,6 @@
 // pages/login.tsx
-"use client";
-import styled from "styled-components";
+'use client';
+import styled from 'styled-components';
 
 const LoginContainer = styled.div`
   display: flex;
@@ -98,7 +98,7 @@ const RegisterLink = styled.div`
 `;
 
 const LoginPage = () => {
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     // Authentication logic goes here
   };
@@ -108,16 +108,16 @@ const LoginPage = () => {
       <LoginForm onSubmit={handleSubmit}>
         <FormTitle>Login</FormTitle>
         <FormInputBox>
-          <FormInput type="email" required id="email" />
-          <FormLabel htmlFor="email">Email</FormLabel>
+          <FormInput type='email' required id='email' />
+          <FormLabel htmlFor='email'>Email</FormLabel>
         </FormInputBox>
         <FormInputBox>
-          <FormInput type="password" required id="password" />
-          <FormLabel htmlFor="password">Senha</FormLabel>
+          <FormInput type='password' required id='password' />
+          <FormLabel htmlFor='password'>Senha</FormLabel>
         </FormInputBox>
-        <SubmitButton type="submit">Entrar</SubmitButton>
+        <SubmitButton type='submit'>Entrar</SubmitButton>
         <RegisterLink>
-          Não tem uma conta? <a href="#">Registre-se</a>
+          Não tem uma conta? <a href='#'>Registre-se</a>
         </RegisterLink>
       </LoginForm>
     </LoginContainer>

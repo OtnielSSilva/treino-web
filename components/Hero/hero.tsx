@@ -22,7 +22,7 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    pauseOnHover: true
+    pauseOnHover: true,
   };
 
   return (
@@ -30,13 +30,14 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
       <Slider {...settings}>
         {slides.map((slide, index) => (
           // Set a specific height for the slide div
-          <div key={index} 
-               className={styles.slide} 
-               style={{ 
-                 backgroundImage: `url(${slide.backgroundImage})`, 
-                 backgroundSize: 'cover', 
-                 backgroundPosition: 'center' 
-               }}
+          <div
+            key={index}
+            className={styles.slide}
+            style={{
+              backgroundImage: `url(${slide.backgroundImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
           >
             <div className={styles.content}>
               <h1 className={styles.title}>{slide.title}</h1>
@@ -48,6 +49,5 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
       </Slider>
     </div>
   );
-
 };
 export default Hero;
