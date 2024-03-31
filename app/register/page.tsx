@@ -1,4 +1,3 @@
-// pages/register.tsx
 "use client";
 import styled from "styled-components";
 
