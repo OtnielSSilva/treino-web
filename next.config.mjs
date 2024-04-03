@@ -1,11 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      'https://img.freepik.com/fotos-gratis',
-      'unsplash.com',
-      'https://images.unsplash.com/',
-      'fakestoreapi.com',
+    formats: ['image/avif', 'image/webp'],
+
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'fakestoreapi.com',
+      },
     ],
   },
 };

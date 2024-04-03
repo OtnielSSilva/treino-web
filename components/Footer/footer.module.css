@@ -1,0 +1,55 @@
+.footer {
+    background-color: var(--footer-background);
+    color: var(--footer-text-color);
+    padding: 2rem; /* aumentado */
+    font-family: 'Open Sans', sans-serif; /* fonte moderna */
+    font-size: 1rem; /* tamanho da fonte escalável */
+    line-height: 1.5;
+    border-top: 1px solid var(--footer-border-color); /* adicionar se precisar de separação */
+}
+
+.footerContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* responsivo */
+    gap: 1rem; /* espaço entre os itens */
+}
+
+.footerColumn h5 {
+    color: var(--footer-highlight-color);
+    margin-bottom: 1rem; /* aumentado */
+    font-size: 1.25rem; /* título maior */
+    letter-spacing: 0.05rem; /* espaçamento das letras */
+}
+
+.footerColumn ul li {
+    margin-bottom: 0.5rem; /* ajustado */
+}
+
+.disclaimer {
+    font-size: 0.875rem; /* ajustado para legibilidade */
+    color: var(--footer-disclaimer-color);
+    text-align: center;
+    padding-top: 1rem; /* ajustado */
+}
+
+@media (max-width: 768px) {
+    .footerContainer {
+        grid-template-columns: 1fr; /* uma coluna em telas pequenas */
+    }
+
+    .footerColumn {
+        text-align: center;
+    }
+}
+
+.footerColumn ul li a {
+    text-decoration: none; /* remover sublinhado */
+    color: var(--footer-link-color); /* cor do link */
+    transition: color 0.3s; /* transição suave */
+}
+
+.footerColumn ul li a:hover,
+.footerColumn ul li a:focus {
+    color: var(--footer-link-hover-color); /* cor ao passar o mouse ou focar */
+}
+

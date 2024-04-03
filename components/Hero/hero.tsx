@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import Slider from 'react-slick';
+import Image from 'next/image';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './hero.module.css';
@@ -29,16 +30,17 @@ const Hero: React.FC<HeroProps> = ({ slides }) => {
     <div className={styles.hero}>
       <Slider {...settings}>
         {slides.map((slide, index) => (
-          // Set a specific height for the slide div
-          <div
-            key={index}
-            className={styles.slide}
-            style={{
-              backgroundImage: `url(${slide.backgroundImage})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          >
+          <div key={index} className={styles.slide}>
+            {/* Adicionando o componente Image */}
+            {slide.backgroundImage && (
+              <Image
+                src={slide.backgroundImage}
+                alt={slide.title}
+                layout='fill'
+                objectFit='cover'
+                quality={75}
+              />
+            )}
             <div className={styles.content}>
               <h1 className={styles.title}>{slide.title}</h1>
               <p className={styles.description}>{slide.description}</p>
