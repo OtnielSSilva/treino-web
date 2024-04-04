@@ -3,6 +3,7 @@ import { IProduct } from '../../types/types';
 import styles from './product.module.css';
 import Image from 'next/image';
 import { useCartStore } from '@/store/useCartStore';
+import QuantitySelector from '../QuantitySelector/QuantitySelector';
 
 interface ProductProps {
   product: IProduct;
@@ -37,18 +38,50 @@ export const Product = ({ product }: ProductProps) => {
         )}
         <span className={styles.salePrice}>R$ {price.toFixed(2)}</span>
       </p>
-      <div className={styles.quantitySelector}>
-        <button className={styles.quantityButton}>-</button>
+      {/* <div className={styles.quantitySelector}>
+        <button
+          className={styles.quantityButton}
+          onClick={(e) => {
+            const quantity = document.getElementById(
+              product.id.toString()
+            ) as HTMLInputElement;
+            if (Number(quantity.value) > 1)
+              quantity.value = String(Number(quantity.value) - 1);
+          }}
+        >
+          -
+        </button>
         <input
           className={styles.quantityInput}
           type='number'
           defaultValue='1'
+          id={product.id.toString()}
         />
-        <button className={styles.quantityButton}>+</button>
-      </div>
+        <button
+          className={styles.quantityButton}
+          onClick={(e) => {
+            const quantity = document.getElementById(
+              product.id.toString()
+            ) as HTMLInputElement;
+            quantity.value = String(Number(quantity.value) + 1);
+          }}
+        >
+          +
+        </button>
+      </div> */}
+      <QuantitySelector product={product} />
       <button
         className={styles.addToCartButton}
-        onClick={() => addToCart(product)}
+        onClick={() => {
+          const quantity = document.getElementById(
+            product.id.toString()
+          ) as HTMLInputElement;
+          const input = document.getElementById(
+            product.id.toString()
+          ) as HTMLInputElement;
+          addToCart(product, quantity.valueAsNumber);
+          input.value = '1';
+        }}
       >
         Adicionar
       </button>

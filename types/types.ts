@@ -8,4 +8,5 @@ export interface IProduct {
   rating?: number;
   category?: string;
   count?: number; // quantity, but different name in the api
+  quantity?: number;
 }
