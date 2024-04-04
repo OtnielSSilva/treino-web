@@ -2,6 +2,7 @@
 import { IProduct } from '../../types/types';
 import styles from './product.module.css';
 import Image from 'next/image';
+import { useCartStore } from '@/store/useCartStore';
 
 interface ProductProps {
   product: IProduct;
@@ -9,6 +10,7 @@ interface ProductProps {
 
 export const Product = ({ product }: ProductProps) => {
   const { title, image, price, originalPrice, onSale } = product;
+  const addToCart = useCartStore((state) => state.addToCart);
 
   return (
     <div className={styles.container}>
@@ -44,7 +46,12 @@ export const Product = ({ product }: ProductProps) => {
         />
         <button className={styles.quantityButton}>+</button>
       </div>
-      <button className={styles.addToCartButton}>Adicionar</button>
+      <button
+        className={styles.addToCartButton}
+        onClick={() => addToCart(product)}
+      >
+        Adicionar
+      </button>
     </div>
   );
 };
