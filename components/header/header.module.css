@@ -26,6 +26,7 @@
 .buttonContainer {
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
   width: 20%;
 }
 
@@ -47,4 +48,24 @@
 
 .button:hover {
   background-color: #777;
+}
+
+.cart {
+  display: flex;
+  font-size: 24px;
+  cursor: pointer;
+  position: relative;
+  margin-left: 15px;
+}
+
+.cart::after {
+  content: '0';
+  background-color: red;
+  color: white;
+  border-radius: 35%;
+  margin-left: -10px;
+  padding: 1px 3px;
+  position: relative;
+  font-size: 0.8rem;
+  top: -10px;
 }
