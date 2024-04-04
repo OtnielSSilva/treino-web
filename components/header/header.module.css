@@ -5,7 +5,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
 }
 
 .freeLink {
@@ -26,7 +25,9 @@
 .buttonContainer {
   display: flex;
   justify-content: space-evenly;
-  width: 20%;
+  align-items: center;
+  max-width: 20%;
+  margin-left: 200px;
 }
 
 .input {
@@ -47,4 +48,23 @@
 
 .button:hover {
   background-color: #777;
+}
+
+.cart {
+  display: flex;
+  font-size: 24px;
+  cursor: pointer;
+  position: relative;
+  margin-left: 15px;
+}
+
+.cartNumber {
+  background-color: red;
+  color: white;
+  border-radius: 35%;
+  margin-left: -10px;
+  padding: 1px 3px;
+  position: relative;
+  font-size: 0.8rem;
+  top: -10px;
 }

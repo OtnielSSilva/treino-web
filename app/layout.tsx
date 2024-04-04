@@ -21,8 +21,8 @@ export default function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         <Header />
-        <main>{children}</main> {/* Wrap children with a main tag for semantics */}
-        <Footer /> {/* Include the Footer component here */}
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
