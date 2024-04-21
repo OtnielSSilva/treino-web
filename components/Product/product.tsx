@@ -10,12 +10,12 @@ interface ProductProps {
 }
 
 export const Product = ({ product }: ProductProps) => {
-  const { title, image, price, originalPrice, onSale } = product;
+  const { produto_id, nome, preco, ativo } = product;
   const addToCart = useCartStore((state) => state.addToCart);
-
+  console.log(preco);
   return (
     <div className={styles.container}>
-      <Image
+      {/* <Image
         src={image}
         alt={title}
         height={0}
@@ -28,15 +28,15 @@ export const Product = ({ product }: ProductProps) => {
           borderRadius: '4px',
           marginBottom: '8px',
         }}
-      />
-      <h3 className={styles.title}>{title}</h3>
+      /> */}
+      <h3 className={styles.title}>{nome}</h3>
       <p className={styles.price}>
-        {onSale && originalPrice && (
+        {/* {onSale && originalPrice && (
           <span className={styles.originalPrice}>
             R$ {originalPrice.toFixed(2)}
           </span>
-        )}
-        <span className={styles.salePrice}>R$ {price.toFixed(2)}</span>
+        )} */}
+        <span className={styles.salePrice}>R$ {Number(preco).toFixed(2)}</span>
       </p>
       {/* <div className={styles.quantitySelector}>
         <button
@@ -74,10 +74,10 @@ export const Product = ({ product }: ProductProps) => {
         className={styles.addToCartButton}
         onClick={() => {
           const quantity = document.getElementById(
-            product.id.toString()
+            product.produto_id.toString()
           ) as HTMLInputElement;
           const input = document.getElementById(
-            product.id.toString()
+            product.produto_id.toString()
           ) as HTMLInputElement;
           addToCart(product, quantity.valueAsNumber);
           input.value = '1';

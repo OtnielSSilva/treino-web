@@ -1,12 +1,9 @@
 export interface IProduct {
-  id: number;
-  title: string;
-  image: string;
-  price: number;
-  originalPrice?: number;
-  onSale?: boolean;
-  rating?: number;
-  category?: string;
-  count?: number; // quantity, but different name in the api
-  quantity?: number;
+  produto_id: number;
+  nome: string;
+  descicao: string;
+  preco: number;
+  categoria_id?: string;
+  estoque?: number;
+  ativo?: boolean;
 }

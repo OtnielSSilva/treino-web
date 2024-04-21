@@ -10,7 +10,7 @@ interface Props {
 export default function MenuButton({ href, title }: Props) {
   return (
     <Link href={href} className='link'>
-      <button>{title}</button>
+      <button className='menuButton'>{title}</button>
     </Link>
   );
 }
