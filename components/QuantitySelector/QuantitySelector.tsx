@@ -12,7 +12,7 @@ export default function QuantitySelector({ product }: ProductProps) {
         className={styles.quantityButton}
         onClick={(e) => {
           const quantity = document.getElementById(
-            product.id.toString()
+            product.produto_id.toString()
           ) as HTMLInputElement;
           if (Number(quantity.value) > 1)
             quantity.value = String(Number(quantity.value) - 1);
@@ -24,13 +24,13 @@ export default function QuantitySelector({ product }: ProductProps) {
         className={styles.quantityInput}
         type='number'
         defaultValue='1'
-        id={product.id.toString()}
+        id={product.produto_id.toString()}
       />
       <button
         className={styles.quantityButton}
         onClick={(e) => {
           const quantity = document.getElementById(
-            product.id.toString()
+            product.produto_id.toString()
           ) as HTMLInputElement;
           quantity.value = String(Number(quantity.value) + 1);
         }}
