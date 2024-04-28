@@ -29,6 +29,7 @@ const SearchInput = ({ classNameProps }: Props) => {
         placeholder='Pesquise no MyStore...'
         className={classNameProps}
         id='search'
+        pattern="[^'\x22]+" // Previne a entrada de aspas simples e duplas
       />
       <button type='submit'>
         <Image src={searchIcon} alt='Cart' width={24} height={24} />

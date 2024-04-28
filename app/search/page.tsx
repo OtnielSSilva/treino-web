@@ -20,7 +20,7 @@ const SearchPage = () => {
   return (
     <div>
       <h1>Search Page</h1>
-      {products && products.length > 0 ? (
+      {products ? (
         <ul>
           {products.map((product) => (
             <Product key={product.produto_id} product={product} />
