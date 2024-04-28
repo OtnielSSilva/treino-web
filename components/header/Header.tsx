@@ -22,6 +22,7 @@ export const Header = () => {
       <div className={styles.buttonContainer}>
         <MenuButton href='/login' title='Login' />
         <MenuButton href='/register' title='Register' />
+        <MenuButton href='/productsManager' title='Gerenciar Produtos' />
         <Link href='/cart' className='link'>
           <div className={styles.cart}>
             <Image src={cartIcon} alt='Cart' width={24} height={24} />

@@ -1,7 +1,7 @@
 .header {
   background-color: #333;
   color: white;
-  padding: 12px;
+  padding: 12px 20px; /* Adicione um pouco mais de padding horizontal */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -15,7 +15,7 @@
   font-size: 24px;
   cursor: pointer;
   text-transform: uppercase;
-  color: white;
+  margin-right: auto; /* Isso empurrará tudo para a direita do logotipo */
 }
 
 .logo:hover {
@@ -24,10 +24,9 @@
 
 .buttonContainer {
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
-  max-width: 20%;
-  margin-left: 200px;
+  /* Não limite a largura máxima; permita que os botões definam seu próprio tamanho */
+  margin-left: auto; /* Isso fará com que a buttonContainer fique à direita */
 }
 
 .input {
@@ -35,16 +34,25 @@
   margin-right: 15px;
   border: none;
   border-radius: 5px;
-  width: 400px;
+  width: 250px; /* Ajuste conforme necessário para manter a responsividade */
   color: #555;
+  box-sizing: border-box; /* Isso impede que o padding aumente a largura */
+  flex-grow: 1;
+  margin-right: 8px ;
 }
 
 .button {
   background-color: #555;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 15px; /* Ajuste o padding para os botões para que correspondam em tamanho */
   cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+  margin: 0 8px;
+  min-width: 100px; /* Largura mínima para uniformidade */
+  text-align: center; /* Alinhe o texto dos botões ao centro */
 }
 
 .button:hover {
@@ -53,19 +61,36 @@
 
 .cart {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   font-size: 24px;
   cursor: pointer;
-  position: relative;
-  margin-left: 15px;
+  margin-left: 15px; /* Espaçamento consistente com outros botões */
 }
 
 .cartNumber {
   background-color: red;
   color: white;
-  border-radius: 35%;
-  margin-left: -10px;
-  padding: 1px 3px;
-  position: relative;
+  border-radius: 50%; /* Faz o número do carrinho ser perfeitamente redondo */
+  padding: 4px; /* Espaçamento adequado ao redor do número */
+  position: absolute;
+  top: -8px;
+  right: -8px;
   font-size: 0.8rem;
-  top: -10px;
+  min-width: 16px; /* Assegura que seja um círculo mesmo com um dígito */
+  text-align: center;
+}
+
+.searchContainer {
+  display: flex; /* Usar flex para alinhar barra de pesquisa e botão */
+  flex-grow: 1; /* Faz com que a barra de pesquisa ocupe o espaço disponível */
+  margin: 0 20px; /* Adicione um espaçamento lateral para separar da logo e dos botões */
+  align-items: center;
+  justify-content: center;
+}
+
+.searchButton {
+  padding: 10px 15px; /* Pode ajustar o padding para alinhar com o tamanho da barra de pesquisa */
+  white-space: nowrap;
 }

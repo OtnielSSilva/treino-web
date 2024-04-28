@@ -1,0 +1,85 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px; /* Limita a largura máxima */
+  margin: auto; /* Centraliza o .main */
+}
+
+.button, .removeButton, .addButton, .updateButton, .cancelButton {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+  margin: 0 5px; /* Espaçamento entre botões */
+}
+
+.button:hover, .addButton:hover, .updateButton:hover {
+  background-color: #4cae4c; /* Efeito hover para botões de adicionar e atualizar */
+}
+
+.removeButton {
+  background-color: #d9534f;
+  color: white;
+}
+
+.removeButton:hover {
+  background-color: #c9302c;
+}
+
+.productList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px; /* Espaçamento entre a lista de produtos e o formulário */
+}
+
+.productItem {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column; /* Organiza os elementos verticalmente */
+  align-items: start; /* Alinha os elementos à esquerda */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.productItem span {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 5px; /* Espaçamento entre o preço e os botões */
+}
+
+.updateButton, .cancelButton {
+  background-color: #f0ad4e; /* Cor para o botão de atualizar */
+  color: white;
+}
+
+.cancelButton {
+  background-color: #6c757d; /* Cor para o botão de cancelar */
+}
+
+.addButton {
+  background-color: #5cb85c;
+  color: white;
+  width: auto;
+  height: auto;
+  line-height: normal;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .productList {
+    grid-template-columns: 1fr; /* Uma coluna em telas pequenas */
+  }
+  
+  .addButton, .button, .removeButton, .updateButton, .cancelButton {
+    width: 100%; /* Botões de largura total em telas pequenas */
+    margin: 10px 0; /* Espaçamento acima e abaixo em telas pequenas */
+  }
+}
