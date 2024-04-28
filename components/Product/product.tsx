@@ -12,7 +12,6 @@ interface ProductProps {
 export const Product = ({ product }: ProductProps) => {
   const { produto_id, nome, preco, ativo } = product;
   const addToCart = useCartStore((state) => state.addToCart);
-  console.log(preco);
   return (
     <div className={styles.container}>
       {/* <Image
