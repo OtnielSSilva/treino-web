@@ -3,35 +3,32 @@
 import { fetchProductsByName } from '@/services/fetchProductsByName';
 import { IProduct } from '@/types/types';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Product } from '@/components/Product/product';
 
 const SearchPage = () => {
+  const search = useSearchParams();
+  const searchQuery = search ? search.get('q') : null;
   const [products, setProducts] = useState<IProduct[]>([]);
-  const [search, setSearch] = useState(localStorage.getItem('search') ?? '');
-  const [refresh, setRefresh] = useState<boolean>(
-    Boolean(localStorage.getItem('refresh')) ?? false
-  );
 
   useEffect(() => {
-    if (search !== '') {
-      fetchProductsByName(search).then((data) => setProducts(data));
-      localStorage.removeItem('search');
-      localStorage.removeItem('refresh');
-      setProducts([]);
+    if (searchQuery) {
+      fetchProductsByName(searchQuery).then((data) => setProducts(data));
     }
-  }, [search]);
+  }, [searchQuery]);
 
   return (
     <div>
       <h1>Search Page</h1>
-      <ul>
-        {refresh &&
-          products.map((product: IProduct) => (
-            <li key={product.produto_id}>{product.nome}</li>
+      {products && products.length > 0 ? (
+        <ul>
+          {products.map((product) => (
+            <Product key={product.produto_id} product={product} />
           ))}
-
-        {!refresh && <li>Search for a product</li>}
-      </ul>
+        </ul>
+      ) : (
+        <p>Nenhum produto foi encontrado</p>
+      )}
     </div>
   );
 };
