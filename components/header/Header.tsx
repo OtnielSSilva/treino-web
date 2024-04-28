@@ -6,6 +6,7 @@ import cartIcon from '../../public/cart.svg';
 import Image from 'next/image';
 import { useCartStore } from '@/store/useCartStore';
 import { redirect } from 'next/navigation';
+import SearchInput from '../SearchInput';
 
 export const Header = () => {
   const cart = useCartStore((state) => state.totalItems);
@@ -16,19 +17,7 @@ export const Header = () => {
         <h1 className={styles.logo}>Projetão Store</h1>
       </Link>
       <div>
-        <input
-          type='text'
-          placeholder='Pesquise no MyStore...'
-          className={styles.input}
-          id='search'
-          onChange={() => {
-            localStorage.setItem(
-              'search',
-              (document.getElementById('search') as HTMLInputElement).value
-            );
-          }}
-        />
-        <MenuButton href='/search' title='Pesquisar' />
+        <SearchInput classNameProps={styles.input} />
       </div>
       <div className={styles.buttonContainer}>
         <MenuButton href='/login' title='Login' />
