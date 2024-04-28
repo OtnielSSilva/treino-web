@@ -11,7 +11,7 @@ function QuantitySelector({ product }: ProductProps) {
 
   const handleDecrement = () => {
     const quantity = document.getElementById(
-      product.id.toString()
+      product.produto_id.toString()
     ) as HTMLInputElement;
     if (Number(quantity.value) > 1) {
       quantity.value = String(Number(quantity.value) - 1);
@@ -21,7 +21,7 @@ function QuantitySelector({ product }: ProductProps) {
 
   const handleIncrement = () => {
     const quantity = document.getElementById(
-      product.id.toString()
+      product.produto_id.toString()
     ) as HTMLInputElement;
     quantity.value = String(Number(quantity.value) + 1);
     cartState.addToCart(product, 1);
@@ -38,10 +38,8 @@ function QuantitySelector({ product }: ProductProps) {
       <input
         className='w-10 text-center rounded'
         type='number'
-        defaultValue={
-          cartState.cart.find((item) => item.id === product.id)?.quantity
-        }
-        id={product.id.toString()}
+        defaultValue={product.quantity || 1}
+        id={product.produto_id.toString()}
       />
       <button
         className='bg-inherit text-green-500 hover:text-green-600 hover:scale-50 p-2'
@@ -64,14 +62,14 @@ export default function CartItem({ product }: ProductProps) {
     <li className='flex justify-between items-center gap-4 mb-2 shadow-md p-4'>
       <div className='flex'>
         <Image
-          src={product.image}
-          alt={product.title}
+          src={product.imagem || ''}
+          alt={product.nome}
           width={100}
           height={100}
           className='w-11 h-11'
         />
         <div className='flex-col ml-5 text-center'>
-          <h3>{product.title}</h3>
+          <h3>{product.nome}</h3>
           <QuantitySelector product={product} />
         </div>
       </div>

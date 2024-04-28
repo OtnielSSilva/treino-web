@@ -6,4 +6,6 @@ export interface IProduct {
   categoria_id?: string;
   estoque?: number;
   ativo?: boolean;
+  imagem?: string;
+  quantity?: number;
 }
