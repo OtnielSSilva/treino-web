@@ -6,10 +6,11 @@ import { useCartStore } from '@/store/useCartStore';
 export default function CartPage() {
   const cart = useCartStore((state) => state.cart);
   const total = cart.reduce(
-    (acc, product) => acc + product.price * (product.quantity as number),
+    (acc, product) => acc + product.preco * (product.quantity as number),
     0
   );
-
+  console.log(total);
+  console.log(cart);
   return (
     <section className='w-full pt-10 mb-20'>
       <div className='w-2/4 m-auto bg-slate-50 p-10'>
@@ -21,7 +22,7 @@ export default function CartPage() {
         <hr className='m-2' />
         <ul className=''>
           {cart.map((product) => (
-            <CartItem key={product.id} product={product} />
+            <CartItem key={product.produto_id} product={product} />
           ))}
         </ul>
         <div className='flex justify-between items-center mt-6'>
