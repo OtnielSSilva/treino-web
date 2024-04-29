@@ -1,52 +1,83 @@
 'use client';
-import React from 'react';
-import styles from './login.module.css';
 
-const LoginPage = () => {
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import styles from './login.module.css';
+import { postForms } from '@/services/postForms';
+
+const createUserSchema = z.object({
+  email: z.string().email({ message: 'Email inválido' }),
+  senha: z.string().min(8, { message: 'Precisa ter no mínimo 8 caracteres' }),
+});
+
+type FormData = z.infer<typeof createUserSchema>;
+
+const Login = () => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(createUserSchema),
+  });
+
+  const [formSuccess, setFormSuccess] = React.useState(false);
+  const [formSucessMessage, setFormSucessMessage] = React.useState('');
+
+  const onSubmit = async (data: any) => {
+    const response = await postForms('login/', data);
+    if (response.ok) {
+      setFormSuccess(true);
+      setFormSucessMessage('Logado com sucesso!');
+    } else {
+      setFormSuccess(false);
+      setFormSucessMessage('Erro ao logar');
+    }
+  };
+
   return (
-    <div className={styles.loginContainer}>
-      <form
-        className={styles.loginForm}
-        // onSubmit={handleSubmit}
-        action='http://localhost:8180/login/'
-        method='POST'
-      >
-        <h2 className={styles.formTitle}>Login</h2>
+    <div className={styles.container}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <h1 className={styles.formTitle}>Fazer Login</h1>
         <div className={styles.formInputBox}>
-          <input
-            className={styles.formInput}
-            type='email'
-            required
-            id='email'
-            name='email'
-            pattern='[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,50}$'
-          />
-          <label className={styles.formLabel} htmlFor='email'>
+          <label htmlFor='email' className={styles.formLabel}>
             Email
           </label>
+          <input
+            {...register('email')}
+            className={errors.email ? styles.error : styles.formInput}
+          />
+          {errors.email && (
+            <span className={styles.errorMessage}>{errors.email.message}</span>
+          )}
         </div>
         <div className={styles.formInputBox}>
-          <input
-            className={styles.formInput}
-            type='password'
-            required
-            id='senha'
-            name='senha'
-            pattern='.{8,}'
-          />
-          <label className={styles.formLabel} htmlFor='senha'>
+          <label htmlFor='password' className={styles.formLabel}>
             Senha
           </label>
+          <input
+            {...register('senha')}
+            className={errors.senha ? styles.error : styles.formInput}
+            type='password'
+          />
+          {errors.senha && (
+            <span className={styles.errorMessage}>{errors.senha.message}</span>
+          )}
         </div>
-        <button className={styles.submitButton} type='submit'>
+        <button type='submit' className={styles.submitButton}>
           Entrar
         </button>
-        <div className={styles.registerLink}>
-          Não tem uma conta? <a href='#'>Registre-se</a>
-        </div>
+        {formSuccess && (
+          <span className={styles.formSucessMessage}>{formSucessMessage}</span>
+        )}
+        {formSuccess === false && (
+          <span className={styles.formErrorMessage}>{formSucessMessage}</span>
+        )}
       </form>
     </div>
   );
 };
 
-export default LoginPage;
+export default Login;

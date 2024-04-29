@@ -22,7 +22,6 @@ export const Products = ({ name, search }: ProductsProps) => {
     }
   }, []);
 
-  // li da lista faltando
   return (
     <div>
       <ul className={styles.listproducts}>
