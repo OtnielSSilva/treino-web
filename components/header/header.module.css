@@ -1,4 +1,4 @@
-.header {
+.menu {
   background-color: #333;
   color: white;
   padding: 12px 20px; /* Adicione um pouco mais de padding horizontal */
@@ -7,6 +7,18 @@
   align-items: center;
 }
 
+.toggle button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.toggle button:hover {
+  color: #f1f1f1;
+}
 .freeLink {
   text-decoration: none;
 }
@@ -38,7 +50,7 @@
   color: #555;
   box-sizing: border-box; /* Isso impede que o padding aumente a largura */
   flex-grow: 1;
-  margin-right: 8px ;
+  margin-right: 8px;
 }
 
 .button {
