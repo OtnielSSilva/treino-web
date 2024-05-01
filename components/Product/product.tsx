@@ -4,6 +4,7 @@ import styles from './product.module.css';
 import Image from 'next/image';
 import { useCartStore } from '@/store/useCartStore';
 import QuantitySelector from '../QuantitySelector/QuantitySelector';
+import imageNotFound from '../../public/images/products/main/not-found.jpg';
 
 interface ProductProps {
   product: IProduct;
@@ -16,7 +17,7 @@ export const Product = ({ product }: ProductProps) => {
     <div className={styles.container}>
       <h3 className={styles.title}>{nome}</h3>
       <Image
-        src={imagemUrl ?? ''}
+        src={imagemUrl ?? imageNotFound}
         alt={nome}
         height={0}
         width={0}
