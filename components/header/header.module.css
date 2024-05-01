@@ -14,6 +14,7 @@
   font-size: 24px;
   cursor: pointer;
   margin-right: 10px;
+  margin-left: -1em;
 }
 
 .toggle button:hover {
@@ -27,7 +28,7 @@
   font-size: 24px;
   cursor: pointer;
   text-transform: uppercase;
-  margin-right: auto; /* Isso empurrará tudo para a direita do logotipo */
+  margin: 0 20px;
 }
 
 .logo:hover {
