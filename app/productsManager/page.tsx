@@ -64,7 +64,7 @@ export default function ManageProducts() {
     const newValue =
       name === 'preco' || name === 'estoque'
         ? value
-          ? parseFloat(value)
+          ? Math.abs(parseFloat(value))
           : ''
         : value;
     setNewProduct({ ...newProduct, [name]: newValue });
@@ -158,6 +158,7 @@ export default function ManageProducts() {
             onChange={handleInputChange}
             placeholder='Nome do Produto'
             maxLength={20}
+            className={styles.input}
           />
           <input
             type='text'
@@ -166,6 +167,7 @@ export default function ManageProducts() {
             onChange={handleInputChange}
             placeholder='Descrição'
             maxLength={25}
+            className={styles.input}
           />
           <input
             type='number'
@@ -174,6 +176,7 @@ export default function ManageProducts() {
             onChange={handleInputChange}
             placeholder='Valor em R$'
             maxLength={10}
+            className={styles.input}
           />
           <select
             name='categoria_id'
