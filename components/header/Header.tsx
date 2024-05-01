@@ -38,7 +38,7 @@ export const Header = () => {
         <Link href={'/'} className={styles.freeLink}>
           <h1 className={styles.logo}>Projetão</h1>
         </Link>
-        <div>
+        <div className={styles.searchContainer}>
           <SearchInput classNameProps={styles.input} />
         </div>
         <div className={styles.buttonContainer}>
