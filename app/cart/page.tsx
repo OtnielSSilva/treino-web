@@ -6,7 +6,7 @@ import { useCartStore } from '@/store/useCartStore';
 export default function CartPage() {
   const cart = useCartStore((state) => state.cart);
   const total = cart.reduce(
-    (acc, product) => acc + product.preco * (product.quantity as number),
+    (acc, product) => acc + +product.preco * (product.quantity as number),
     0
   );
   console.log(total);

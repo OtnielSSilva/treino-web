@@ -62,7 +62,7 @@ export default function CartItem({ product }: ProductProps) {
     <li className='flex justify-between items-center gap-4 mb-2 shadow-md p-4'>
       <div className='flex'>
         <Image
-          src={product.imagem || ''}
+          src={product.imagemUrl || ''}
           alt={product.nome}
           width={100}
           height={100}
