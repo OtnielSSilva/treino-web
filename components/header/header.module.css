@@ -1,4 +1,4 @@
-.header {
+.menu {
   background-color: #333;
   color: white;
   padding: 12px 20px; /* Adicione um pouco mais de padding horizontal */
@@ -7,6 +7,19 @@
   align-items: center;
 }
 
+.toggle button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-left: -0.8em;
+}
+
+.toggle button:hover {
+  color: #f1f1f1;
+}
 .freeLink {
   text-decoration: none;
 }
@@ -15,7 +28,7 @@
   font-size: 24px;
   cursor: pointer;
   text-transform: uppercase;
-  margin-right: auto; /* Isso empurrará tudo para a direita do logotipo */
+  margin: 0 20px;
 }
 
 .logo:hover {
@@ -38,7 +51,7 @@
   color: #555;
   box-sizing: border-box; /* Isso impede que o padding aumente a largura */
   flex-grow: 1;
-  margin-right: 8px ;
+  margin-right: 8px;
 }
 
 .button {
