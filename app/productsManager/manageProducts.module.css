@@ -3,11 +3,32 @@
   flex-direction: column;
   padding: 20px;
   width: 100%;
-  max-width: 1200px; /* Limita a largura máxima */
-  margin: auto; /* Centraliza o .main */
+  max-width: 1200px;
+  margin: auto;
 }
 
-.button, .removeButton, .addButton, .updateButton, .cancelButton {
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input, .select {
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.button,  .addButton, .updateButton, .cancelButton {
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
@@ -15,27 +36,19 @@
   font-weight: bold;
   text-transform: uppercase;
   transition: background-color 0.3s ease;
-  margin: 0 5px; /* Espaçamento entre botões */
+  margin: 0 5px;
 }
 
-.button:hover, .addButton:hover, .updateButton:hover {
-  background-color: #4cae4c; /* Efeito hover para botões de adicionar e atualizar */
+.button:hover, .addButton:hover, .updateButton:hover, .cancelButton:hover {
+  background-color: #4cae4c;
 }
 
-.removeButton {
-  background-color: #d9534f;
-  color: white;
-}
-
-.removeButton:hover {
-  background-color: #c9302c;
-}
 
 .productList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
-  margin-top: 20px; /* Espaçamento entre a lista de produtos e o formulário */
+  margin-top: 20px;
 }
 
 .productItem {
@@ -44,24 +57,45 @@
   border-radius: 4px;
   padding: 15px;
   display: flex;
-  flex-direction: column; /* Organiza os elementos verticalmente */
-  align-items: start; /* Alinha os elementos à esquerda */
+  flex-direction: column;
+  align-items: start;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.productItem span {
-  font-size: 1rem;
+.productItem h3 {
+  font-size: 1.25rem;
   color: #333;
-  margin-bottom: 5px; /* Espaçamento entre o preço e os botões */
+  margin-bottom: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.productDescription {
+  white-space: nowrap;
+  margin: 5px 0;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.productItem p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 5px;
+  overflow: hidden;
 }
 
 .updateButton, .cancelButton {
-  background-color: #f0ad4e; /* Cor para o botão de atualizar */
+  background-color: #f0ad4e;
   color: white;
 }
 
 .cancelButton {
-  background-color: #6c757d; /* Cor para o botão de cancelar */
+  background-color: #6c757d;
 }
 
 .addButton {
@@ -73,13 +107,95 @@
   margin-top: 20px;
 }
 
+.quantityAndUnit {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espaço entre os campos */
+}
+
+.quantityInput, .unitSelect {
+  flex: 1; /* Os campos ocupam espaço igual no contêiner */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.unitSelect {
+  flex-basis: 40%; /* Ajusta a largura inicial da seleção de unidade */
+}
+
+.quantityInput {
+  flex-basis: 60%; /* Ajusta a largura inicial da entrada de quantidade */
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: center; /* Centraliza o título horizontalmente */
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.mainTitle {
+  font-size: 1.5rem; /* Tamanho da fonte reduzido */
+  color: #4a4a4a; /* Cor de texto mais suave */
+  font-weight: normal; /* Removendo negrito para suavizar */
+  padding: 5px 10px;
+  background-color: #f0f0f0; /* Fundo mais suave */
+  border-radius: 5px; /* Bordas menos arredondadas */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra mais leve */
+}
+
+.productActions {
+  display: flex;
+  justify-content: start; /* Alinha os botões à esquerda */
+  gap: 10px; /* Espaçamento entre os botões */
+}
+
+.editButton, .removeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px; /* Ajuste o padding conforme necessário */
+  border-radius: 5px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  width: auto; /* Garante que ambos tenham o mesmo tamanho */
+  min-width: 80px; /* Garante um tamanho mínimo para os botões */
+}
+
+.editButton {
+  background-color: #007BFF; /* Cor verde para editar */
+}
+
+.editButton:hover {
+  background-color: #0056b3;; /* Verde escuro no hover */
+}
+
+.removeButton {
+  background-color: #f44336; /* Vermelho para remover */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.removeButton:hover {
+  background-color: #d32f2f; /* Vermelho escuro no hover */
+}
+
+.editButton svg, .removeButton svg {
+  margin-right: 0; /* Remova todas as margens para ícones, se houver apenas ícones */
+  font-size: 1em; /* Ajuste o tamanho do ícone conforme necessário */
+}
+
 @media (max-width: 768px) {
   .productList {
-    grid-template-columns: 1fr; /* Uma coluna em telas pequenas */
+    grid-template-columns: 1fr;
   }
-  
-  .addButton, .button, .removeButton, .updateButton, .cancelButton {
-    width: 100%; /* Botões de largura total em telas pequenas */
-    margin: 10px 0; /* Espaçamento acima e abaixo em telas pequenas */
+
+  .addButton, .button,  .updateButton, .cancelButton {
+    width: 100%;
+    margin: 10px 0;
   }
 }
