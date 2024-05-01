@@ -40,6 +40,7 @@ function QuantitySelector({ product }: ProductProps) {
         type='number'
         defaultValue={product.quantity || 1}
         id={product.produto_id.toString()}
+        min={1}
       />
       <button
         className='bg-inherit text-green-500 hover:text-green-600 hover:scale-50 p-2'
