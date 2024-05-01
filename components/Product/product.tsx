@@ -10,26 +10,25 @@ interface ProductProps {
 }
 
 export const Product = ({ product }: ProductProps) => {
-  const { produto_id, nome, preco, ativo } = product;
+  const { produto_id, nome, preco, ativo, imagemUrl } = product;
   const addToCart = useCartStore((state) => state.addToCart);
-  console.log(preco);
   return (
     <div className={styles.container}>
-      {/* <Image
-        src={image}
-        alt={title}
+      <h3 className={styles.title}>{nome}</h3>
+      <Image
+        src={imagemUrl ?? ''}
+        alt={nome}
         height={0}
         width={0}
         sizes='100vw'
         style={{
           width: '100%',
           height: '150px',
-          objectFit: 'cover',
+          objectFit: 'contain',
           borderRadius: '4px',
           marginBottom: '8px',
         }}
-      /> */}
-      <h3 className={styles.title}>{nome}</h3>
+      />
       <p className={styles.price}>
         {/* {onSale && originalPrice && (
           <span className={styles.originalPrice}>

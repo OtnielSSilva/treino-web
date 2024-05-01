@@ -7,4 +7,6 @@ export interface IProduct {
   estoque?: number;
   unidade: string;
   ativo?: boolean;
+  imagemUrl?: string;
+  quantity?: number;
 }
