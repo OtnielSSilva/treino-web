@@ -189,9 +189,6 @@ export default function ManageProducts() {
         body: data,
       });
 
-      const response = await res.json();
-      console.log(fileName);
-
       if (!res.ok) throw new Error(await res.text());
     } catch (e: any) {
       console.log(e);
