@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-const page = () => {
+const FileInput = () => {
   const [file, setFile] = React.useState<File>();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,4 +36,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default FileInput;
