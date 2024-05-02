@@ -66,7 +66,7 @@ const updateProduct = async (product, fileName) => {
     ativo: String(product.ativo),
     imagemUrl: fileName ? `/images/products/main/${fileName}` : '',
   };
-
+        
   try {
     const response = await fetch(`${baseURL}${product.produto_id}`, {
       // Use backticks for template literals
@@ -114,7 +114,7 @@ export default function ManageProducts() {
     estoque: '',
     unidade: '',
     ativo: 1,
-    imagemUrl: '', // Incluir campo para armazenar o nome do arquivo
+    imagemUrl: '',
   });
   const [isEditing, setIsEditing] = useState(false);
   const [categorias, setCategorias] = useState([]);
@@ -128,6 +128,23 @@ export default function ManageProducts() {
     id: categoria_id,
     name: nome,
   }));
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(baseURL);
+      if (!response.ok) {
+        throw new Error('Failed to fetch products');
+      }
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      toast.error('Erro ao carregar produtos: ' + error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const fetchProducts = async () => {
     try {
