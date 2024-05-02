@@ -25,6 +25,7 @@ export default function QuantitySelector({ product }: ProductProps) {
         type='number'
         defaultValue='1'
         id={product.produto_id.toString()}
+        min={1}
       />
       <button
         className={styles.quantityButton}

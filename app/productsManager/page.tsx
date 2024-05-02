@@ -1,41 +1,146 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './manageProducts.module.css';
-import { IProduct } from '@/types/types';
 import { FaTrashAlt, FaPencilAlt } from 'react-icons/fa';
+import { fetchCategories } from '@/services/fetchCategories';
 
-const categories = [
-  { id: 1, name: 'Carnes' },
-  { id: 2, name: 'Laticínios' },
-  { id: 3, name: 'Frutas' },
-  { id: 4, name: 'Legumes e Verduras' },
-  { id: 5, name: 'Produtos de limpeza' },
-  { id: 6, name: 'Grãos e Cereais' },
-  { id: 7, name: 'Laticínios' },
-  { id: 8, name: 'Ovos e Padaria' },
-];
+export interface IProduct {
+  produto_id?: number;
+  nome: string;
+  descricao: string;
+  preco: number;
+  categoria_id?: number;
+  estoque: number;
+  ativo: number;
+  unidade: string;
+  imagemUrl?: string;
+}
 
 const units = [
   { id: 1, name: 'Kg' },
-  { id: 2, name: 'Gramas' },
-  { id: 3, name: 'Unidade' },
+  { id: 2, name: 'G' },
+  { id: 3, name: 'Un' },
 ];
+
+const baseURL = 'http://localhost:8180/meusProdutos/';
+
+const createProduct = async (product, fileName) => {
+  const productSubmit = {
+    nome: String(product.nome),
+    descricao: String(product.descricao),
+    preco: String(product.preco),
+    categoria_id: Number(product.categoria_id),
+    estoque: String(product.estoque),
+    unidade: String(product.unidade),
+    ativo: String(product.ativo),
+    imagemUrl: fileName ? `/images/products/main/${fileName}` : '',
+  };
+
+  try {
+    const response = await fetch(baseURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(productSubmit),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to create product: ${errorData.message}`);
+    }
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+const updateProduct = async (product, fileName) => {
+  const productSubmit = {
+    nome: String(product.nome),
+    descricao: String(product.descricao),
+    preco: String(product.preco),
+    categoria_id: Number(product.categoria_id),
+    estoque: String(product.estoque),
+    unidade: String(product.unidade),
+    ativo: String(product.ativo),
+    imagemUrl: fileName ? `/images/products/main/${fileName}` : '',
+  };
+
+  try {
+    const response = await fetch(`${baseURL}${product.produto_id}`, {
+      // Use backticks for template literals
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(productSubmit),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to update product: ${errorData.message}`);
+    }
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteProduct = async (productId) => {
+  try {
+    const response = await fetch(`${baseURL}${productId}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete product');
+    }
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+};
 
 export default function ManageProducts() {
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [fileName, setFileName] = React.useState('');
+  const [file, setFile] = React.useState<File>();
+
   const [newProduct, setNewProduct] = useState({
     produto_id: 0,
     nome: '',
     descricao: '',
     preco: '',
-    categoria_id: '',
+    categoria_id: 0,
     estoque: '',
     unidade: '',
-    ativo: true,
+    ativo: 1,
+    imagemUrl: '',
   });
   const [isEditing, setIsEditing] = useState(false);
+  const [categorias, setCategorias] = useState([]);
+
+  useEffect(() => {
+    fetchProducts();
+    fetchCategories().then((data) => setCategorias(data));
+  }, []);
+
+  const categories = categorias.map(({ categoria_id, nome }) => ({
+    id: categoria_id,
+    name: nome,
+  }));
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(baseURL);
+      if (!response.ok) {
+        throw new Error('Failed to fetch products');
+      }
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      toast.error('Erro ao carregar produtos: ' + error.message);
+    }
+  };
 
   const validateForm = () => {
     const fields = [
@@ -47,66 +152,64 @@ export default function ManageProducts() {
       'unidade',
     ];
     const missingFields = [];
-
     fields.forEach((field) => {
       if (!newProduct[field]) {
         missingFields.push(field);
       }
     });
-
     return missingFields;
   };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
-    const newValue =
-      name === 'preco' || name === 'estoque'
-        ? value
-          ? Math.abs(parseFloat(value))
-          : ''
-        : value;
+    let { name, value } = e.target;
+
+    let newValue =
+      name === 'preco' || name === 'estoque' ? parseFloat(value) || 0 : value;
+
     setNewProduct({ ...newProduct, [name]: newValue });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const missingFields = validateForm();
-
     if (missingFields.length > 0) {
-      toast.error(
-        `Por favor, preencha os seguintes campos: ${missingFields.join(', ')}`
-      );
+      toast.error(`
+        Por favor, preencha os seguintes campos: ${missingFields.join(', ')}`);
       return;
     }
 
-    const updatedProducts = products.map((p) =>
-      p.produto_id === newProduct.produto_id
-        ? {
-            ...newProduct,
-            preco: Number(newProduct.preco),
-            estoque: Number(newProduct.estoque),
-          }
-        : p
-    );
+    try {
+      const data = new FormData();
+      data.set('file', file);
 
-    if (isEditing) {
-      setProducts(updatedProducts);
-    } else {
-      const nextId =
-        products.reduce((max, p) => Math.max(p.produto_id, max), 0) + 1;
-      setProducts([
-        ...products,
-        {
-          ...newProduct,
-          produto_id: nextId,
-          preco: Number(newProduct.preco),
-          estoque: Number(newProduct.estoque),
-        },
-      ]);
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: data,
+      });
+
+      const response = await res.json();
+      setFileName(response.filePath);
+      console.log(fileName);
+
+      if (!res.ok) throw new Error(await res.text());
+    } catch (e: any) {
+      console.log(e);
     }
 
+    try {
+      if (isEditing) {
+        const updatedProduct = await updateProduct(newProduct, fileName);
+        toast.success('Produto atualizado com sucesso!');
+      } else {
+        const newCreatedProduct = await createProduct(newProduct, fileName);
+        toast.success('Produto adicionado com sucesso!');
+      }
+      fetchProducts(); // Função para recarregar produtos do servidor após a atualização
+    } catch (error) {
+      toast.error(`Erro ao salvar o produto: ${error.message}`);
+    }
     resetForm();
   };
 
@@ -116,15 +219,16 @@ export default function ManageProducts() {
       nome: '',
       descricao: '',
       preco: '',
-      categoria_id: '',
+      categoria_id: null,
       estoque: '',
       unidade: '',
-      ativo: true,
+      ativo: 1,
+      imagemUrl: null,
     });
     setIsEditing(false);
   };
 
-  const editProduct = (product: IProduct) => {
+  const editProduct = (product) => {
     setNewProduct(product);
     setIsEditing(true);
   };
@@ -177,10 +281,12 @@ export default function ManageProducts() {
             placeholder='Valor em R$'
             maxLength={10}
             className={styles.input}
+            min={0}
+            step={0.01}
           />
           <select
             name='categoria_id'
-            value={newProduct.categoria_id}
+            value={newProduct.categoria_id || ''}
             onChange={handleInputChange}
             className={styles.select}
           >
@@ -197,12 +303,13 @@ export default function ManageProducts() {
               name='estoque'
               value={newProduct.estoque}
               onChange={handleInputChange}
-              placeholder='Quantidade em KG/G/U'
+              placeholder='Quantidade em KG/G/UN'
               className={styles.quantityInput}
+              min={0}
             />
             <select
               name='unidade'
-              value={newProduct.unidade}
+              value={newProduct.unidade || ''}
               onChange={handleInputChange}
               className={styles.unitSelect}
             >
@@ -214,6 +321,18 @@ export default function ManageProducts() {
               ))}
             </select>
           </div>
+          <input
+            type='file'
+            name='file'
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                setFile(file);
+                setFileName(file.name);
+              }
+            }}
+            className={styles.clear_right}
+          />
 
           {isEditing ? (
             <>
@@ -235,6 +354,7 @@ export default function ManageProducts() {
           )}
         </form>
       </div>
+
       <div className={styles.productList}>
         {products.length > 0 ? (
           products.map((product) => (
@@ -253,7 +373,7 @@ export default function ManageProducts() {
               <p>
                 Categoria:{' '}
                 {categories.find(
-                  (c) => c.id.toString() === product.categoria_id
+                  (c) => c.id.toString() === product.categoria_id.toString()
                 )?.name || 'Sem categoria'}
               </p>
               <p>
@@ -270,13 +390,17 @@ export default function ManageProducts() {
                   <FaPencilAlt />
                 </button>
                 <button
-                  onClick={() =>
-                    setProducts(
-                      products.filter(
-                        (p) => p.produto_id !== product.produto_id
-                      )
-                    )
-                  }
+                  onClick={async () => {
+                    try {
+                      await deleteProduct(product.produto_id);
+                      toast.success('Produto removido com sucesso!');
+                      fetchProducts();
+                    } catch (error) {
+                      toast.error(
+                        'Erro ao remover o produto: ' + error.message
+                      );
+                    }
+                  }}
                   className={styles.removeButton}
                   title='Remover'
                 >
