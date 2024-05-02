@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './manageProducts.module.css';
 import { FaTrashAlt, FaPencilAlt } from 'react-icons/fa';
+import { fetchCategories } from '@/services/fetchCategories';
 
 export interface IProduct {
   produto_id?: number;
@@ -17,17 +18,6 @@ export interface IProduct {
   imagemUrl?: string;
 }
 
-const categories = [
-  { id: 1, name: 'Carnes' },
-  { id: 2, name: 'Laticínios' },
-  { id: 3, name: 'Frutas' },
-  { id: 4, name: 'Legumes e Verduras' },
-  { id: 5, name: 'Produtos de limpeza' },
-  { id: 6, name: 'Grãos e Cereais' },
-  { id: 7, name: 'Laticínios' },
-  { id: 8, name: 'Ovos e Padaria' },
-];
-
 const units = [
   { id: 1, name: 'Kg' },
   { id: 2, name: 'G' },
@@ -36,16 +26,16 @@ const units = [
 
 const baseURL = 'http://localhost:8180/meusProdutos/';
 
-const createProduct = async (product) => {
+const createProduct = async (product, fileName) => {
   const productSubmit = {
     nome: String(product.nome),
     descricao: String(product.descricao),
     preco: String(product.preco),
     categoria_id: Number(product.categoria_id),
     estoque: String(product.estoque),
-    ativo: product.ativo ? product.ativo : 1,
     unidade: String(product.unidade),
-    imagemUrl: product.imagemUrl ? product.imagemUrl : '',
+    ativo: String(product.ativo),
+    imagemUrl: fileName ? `/images/products/main/${fileName}` : '',
   };
 
   try {
@@ -65,8 +55,18 @@ const createProduct = async (product) => {
     throw error;
   }
 };
+const updateProduct = async (product, fileName) => {
+  const productSubmit = {
+    nome: String(product.nome),
+    descricao: String(product.descricao),
+    preco: String(product.preco),
+    categoria_id: Number(product.categoria_id),
+    estoque: String(product.estoque),
+    unidade: String(product.unidade),
+    ativo: String(product.ativo),
+    imagemUrl: fileName ? `/images/products/main/${fileName}` : '',
+  };
 
-const updateProduct = async (product) => {
   try {
     const response = await fetch(`${baseURL}${product.produto_id}`, {
       // Use backticks for template literals
@@ -74,7 +74,7 @@ const updateProduct = async (product) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(product),
+      body: JSON.stringify(productSubmit),
     });
     if (!response.ok) {
       const errorData = await response.json();
@@ -102,6 +102,9 @@ const deleteProduct = async (productId) => {
 
 export default function ManageProducts() {
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [fileName, setFileName] = React.useState('');
+  const [file, setFile] = React.useState<File>();
+
   const [newProduct, setNewProduct] = useState({
     produto_id: 0,
     nome: '',
@@ -111,12 +114,20 @@ export default function ManageProducts() {
     estoque: '',
     unidade: '',
     ativo: 1,
+    imagemUrl: '', // Incluir campo para armazenar o nome do arquivo
   });
   const [isEditing, setIsEditing] = useState(false);
+  const [categorias, setCategorias] = useState([]);
 
   useEffect(() => {
     fetchProducts();
+    fetchCategories().then((data) => setCategorias(data));
   }, []);
+
+  const categories = categorias.map(({ categoria_id, nome }) => ({
+    id: categoria_id,
+    name: nome,
+  }));
 
   const fetchProducts = async () => {
     try {
@@ -164,18 +175,35 @@ export default function ManageProducts() {
     e.preventDefault();
     const missingFields = validateForm();
     if (missingFields.length > 0) {
-      toast.error(
-        `Por favor, preencha os seguintes campos: ${missingFields.join(', ')}`
-      );
+      toast.error(`
+        Por favor, preencha os seguintes campos: ${missingFields.join(', ')}`);
       return;
     }
 
     try {
+      const data = new FormData();
+      data.set('file', file);
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: data,
+      });
+
+      const response = await res.json();
+      setFileName(response.filePath);
+      console.log(fileName);
+
+      if (!res.ok) throw new Error(await res.text());
+    } catch (e: any) {
+      console.log(e);
+    }
+
+    try {
       if (isEditing) {
-        const updatedProduct = await updateProduct(newProduct);
+        const updatedProduct = await updateProduct(newProduct, fileName);
         toast.success('Produto atualizado com sucesso!');
       } else {
-        const newCreatedProduct = await createProduct(newProduct);
+        const newCreatedProduct = await createProduct(newProduct, fileName);
         toast.success('Produto adicionado com sucesso!');
       }
       fetchProducts(); // Função para recarregar produtos do servidor após a atualização
@@ -293,6 +321,18 @@ export default function ManageProducts() {
               ))}
             </select>
           </div>
+          <input
+            type='file'
+            name='file'
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                setFile(file);
+                setFileName(file.name);
+              }
+            }}
+            className={styles.clear_right}
+          />
 
           {isEditing ? (
             <>
