@@ -1,5 +1,5 @@
 'use client';
-import { IProduct } from '../../types/types';
+import { IProduct } from '../../types/product.interface';
 import styles from './product.module.css';
 import Image from 'next/image';
 import { useCartStore } from '@/store/useCartStore';

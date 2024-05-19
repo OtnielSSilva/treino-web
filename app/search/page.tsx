@@ -1,9 +1,9 @@
 'use client';
 
 import { fetchProductsByName } from '@/services/fetchProductsByName';
-import { IProduct } from '@/types/types';
+import { IProduct } from '@/types/product.interface';
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Product } from '@/components/Product/product';
 
 const SearchPage = () => {

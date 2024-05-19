@@ -1,5 +1,5 @@
 import { useCartStore } from '@/store/useCartStore';
-import { IProduct } from '@/types/types';
+import { IProduct } from '@/types/product';
 import Image from 'next/image';
 
 interface ProductProps {

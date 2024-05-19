@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Product } from '../Product/product';
-import { IProduct } from '../../types/types';
+import { IProduct } from '../../types/product.interface';
 import { fetchProducts } from '../../services/fetchProducts';
 import { fetchProductsByName } from '@/services/fetchProductsByName';
 import styles from './products.module.css';

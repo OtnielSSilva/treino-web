@@ -1,7 +1,7 @@
 'use client';
 import { Product } from '@/components/Product/product';
 import { fetchProductsByCategory } from '@/services/fetchProductsByCategory';
-import { IProduct } from '@/types/types';
+import { IProduct } from '@/types/product';
 import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 

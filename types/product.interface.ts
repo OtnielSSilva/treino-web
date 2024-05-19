@@ -2,11 +2,10 @@ export interface IProduct {
   produto_id: number;
   nome: string;
   descricao: string;
-  preco: string;
+  preco: number;
   categoria_id?: string;
   estoque?: number;
-  unidade: string;
-  ativo?: boolean;
+  unidade: number;
+  ativo?: number;
   imagemUrl?: string;
-  quantity?: number;
 }

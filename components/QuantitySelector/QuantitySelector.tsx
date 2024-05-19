@@ -1,5 +1,5 @@
 import styles from './quantitySelector.module.css';
-import { IProduct } from '../../types/types';
+import { IProduct } from '../../types/product.interface';
 
 interface ProductProps {
   product: IProduct;

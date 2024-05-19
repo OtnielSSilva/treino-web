@@ -14,7 +14,7 @@ import menuIcon from '../../public/menuIcon.svg';
 import menuInactiveIcon from '../../public/menuInactiveIcon.svg';
 
 export const Header = () => {
-  const cart = useCartStore((state) => state.totalItems);
+  const cart = useCartStore((state) => state.totalItems as number);
   const [sideBarActive, setSideBarActive] = useState(false);
 
   return (
